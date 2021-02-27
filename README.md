@@ -8,8 +8,8 @@ Creating a JFrame with a custom title and displaying it
 
 ```kotlin
 frame("Test Application") {
-    isVisible = true
-    defaultCloseOperation = WindowConstants.EXIT_ON_CLOSE
+    quitOnClose()
+    showFrame()
 }
 ```
 
@@ -21,8 +21,21 @@ frame("Test Application") {
         text = "Hello World"
     }
 
-    isVisible = true
-    defaultCloseOperation = WindowConstants.EXIT_ON_CLOSE
+    quitOnClose()
+    showFrame()
+}
+```
+
+Running code when the frame is closed
+
+```kotlin
+frame("Test Application") {
+    ...
+    
+    onClose {
+        // Do whatever you need to do here
+        println("Frame has been closed!")
+    }
 }
 ```
 
