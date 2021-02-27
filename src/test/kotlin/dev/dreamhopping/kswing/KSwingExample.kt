@@ -36,7 +36,12 @@ fun main(args: Array<String>) {
 
             // Add another label to the frame with some style
             label("This is another label, it is bigger and bolder!") {
-                font = Font(font.name, Font.BOLD, 20)
+                // Alternatively, you could do this: font(size = 16, weight = Font.BOLD)
+                font {
+                    size = 16
+                    weight = Font.BOLD
+                }
+
                 centerHorizontally()
             }
         }

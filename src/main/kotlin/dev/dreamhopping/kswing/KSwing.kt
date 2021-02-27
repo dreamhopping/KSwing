@@ -1,11 +1,12 @@
 package dev.dreamhopping.kswing
 
+import dev.dreamhopping.kswing.font.KSwingFontBuilder
 import java.awt.Component
 import java.awt.Container
+import java.awt.Font
 import java.awt.event.WindowAdapter
 import java.awt.event.WindowEvent
 import javax.swing.*
-
 
 /**
  * Constructs a [JFrame]
@@ -152,4 +153,22 @@ fun JComponent.centerHorizontally() {
  */
 fun JComponent.centerVertically() {
     alignmentY = Component.CENTER_ALIGNMENT
+}
+
+/**
+ * Sets the [JComponent.font] property using [KSwingFontBuilder]
+ */
+fun JComponent.font(init: KSwingFontBuilder.() -> Unit = {}) {
+    font = KSwingFontBuilder().apply(init).build()
+}
+
+/**
+ * Sets the [JComponent.font] property using [KSwingFontBuilder]
+ *
+ * @param name The name of the font, default to the property's existing font name
+ * @param weight The weight of the font, default to [Font.PLAIN]
+ * @param size The size of the font, default to the property's existing font size
+ */
+fun JComponent.font(name: String = font.name, weight: Int = Font.PLAIN, size: Int = font.size) {
+    font = KSwingFontBuilder(name, weight, size).build()
 }
