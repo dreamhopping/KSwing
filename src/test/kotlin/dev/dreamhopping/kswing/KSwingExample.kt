@@ -23,7 +23,19 @@ fun main(args: Array<String>) {
             // Add a button to the frame
             button("Hello World") {
                 onClick {
-                    println("Hello World")
+                    // Show a dialog with a custom label
+                    dialog {
+                        setSize(400, 300)
+
+                        label("Hello World") {
+                            font {
+                                size = 16
+                                weight = Font.BOLD
+                            }
+
+                            centerHorizontally()
+                        }
+                    }
                 }
 
                 centerHorizontally()

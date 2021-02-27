@@ -172,3 +172,15 @@ fun JComponent.font(init: KSwingFontBuilder.() -> Unit = {}) {
 fun JComponent.font(name: String = font.name, weight: Int = Font.PLAIN, size: Int = font.size) {
     font = KSwingFontBuilder(name, weight, size).build()
 }
+
+/**
+ * Constructs a [JDialog] and automatically sets it to visible if [showDialog] is true
+ *
+ * @param showDialog If the dialog should be automatically shown when created, default is true
+ */
+fun dialog(showDialog: Boolean = true, init: JDialog.() -> Unit = {}): JDialog {
+    val dialog = JDialog().apply(init)
+    dialog.isVisible = showDialog
+
+    return dialog
+}
