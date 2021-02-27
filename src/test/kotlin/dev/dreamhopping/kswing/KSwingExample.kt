@@ -1,9 +1,7 @@
 package dev.dreamhopping.kswing
 
+import java.awt.FlowLayout
 import java.awt.Font
-import java.awt.Insets
-import javax.swing.BoxLayout
-import javax.swing.border.EmptyBorder
 
 
 /**
@@ -12,59 +10,46 @@ import javax.swing.border.EmptyBorder
  * @author Conor Byrne (dreamhopping)
  */
 fun main(args: Array<String>) {
-    // Create a simple frame and display it
-    frame("Test Application") {
-        // Create the panel
-        panel {
-            // Setup the layout of the panel
-            layout = BoxLayout(this, BoxLayout.Y_AXIS)
-            border = EmptyBorder(Insets(50, 80, 50, 80))
+    // Set the look and feel
+    useSystemLookAndFeel()
 
-            // Add a button to the frame
-            button("Hello World") {
-                onClick {
-                    // Show a dialog with a custom label
-                    dialog {
-                        setSize(400, 300)
+    // Create a JFrame
+    frame("KSwing Demo Application", 1280, 720) {
+        // Set the layout
+        layout = FlowLayout()
 
-                        label("Hello World") {
-                            font {
-                                size = 16
-                                weight = Font.BOLD
-                            }
+        // Add components
+        label("Welcome to KSwing") {
+            font(size = 20, weight = Font.BOLD)
+        }
 
-                            centerHorizontally()
+        button("Show Dialog") {
+            // Set the font weight to bold
+            font(size = 15)
+
+            // Display a dialog when clicked
+            onClick {
+                dialog("Dialog") {
+                    // Set the layout
+                    layout = FlowLayout()
+
+                    // Add an example label
+                    label("This is a dialog") {
+                        font(size = 17, weight = Font.ITALIC)
+                    }
+
+                    // Add a button to dismiss the dialog
+                    button("Close") {
+                        onClick {
+                            this@dialog.isVisible = false
                         }
                     }
                 }
-
-                centerHorizontally()
-            }
-
-            // Add a label to the frame
-            label("This is a label") {
-                centerHorizontally()
-            }
-
-            // Add another label to the frame with some style
-            label("This is another label, it is bigger and bolder!") {
-                // Alternatively, you could do this: font(size = 16, weight = Font.BOLD)
-                font {
-                    size = 16
-                    weight = Font.BOLD
-                }
-
-                centerHorizontally()
             }
         }
 
-        // Print a string when the frame is closed
-        onClose {
-            println("Goodbye :(")
-        }
-
-        // Tell it to kill the process when it is closed & show the frame
-        quitOnClose()
+        // Show the frame
+        exitOnClose()
         showFrame()
     }
 }

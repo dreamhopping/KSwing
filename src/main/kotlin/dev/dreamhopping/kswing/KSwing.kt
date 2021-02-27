@@ -34,8 +34,17 @@ inline fun panel(init: JPanel.() -> Unit = {}) = JPanel().apply(init)
  *
  * @param showDialog If the dialog should be automatically shown when created, default is true
  */
-inline fun dialog(showDialog: Boolean = true, init: JDialog.() -> Unit = {}): JDialog {
+inline fun dialog(
+    title: String? = null,
+    width: Int = 400,
+    height: Int = 300,
+    showDialog: Boolean = true,
+    init: JDialog.() -> Unit = {}
+): JDialog {
     val dialog = JDialog().apply(init)
+
+    dialog.title = title
+    dialog.setSize(width, height)
     dialog.isVisible = showDialog
 
     return dialog
@@ -81,7 +90,7 @@ inline fun Container.label(text: String? = null, init: JLabel.() -> Unit = {}): 
 /**
  * Sets [JFrame.defaultCloseOperation] to [WindowConstants.EXIT_ON_CLOSE]
  */
-fun JFrame.quitOnClose() {
+fun JFrame.exitOnClose() {
     this.defaultCloseOperation = WindowConstants.EXIT_ON_CLOSE
 }
 
@@ -91,6 +100,11 @@ fun JFrame.quitOnClose() {
 fun JFrame.showFrame() {
     isVisible = true
 }
+
+/**
+ * Calls [UIManager.setLookAndFeel] to use the [UIManager.getSystemLookAndFeelClassName] as the look and feel
+ */
+fun useSystemLookAndFeel() = UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName())
 
 /**
  * Calls the supplied action when the [JFrame] is closed
