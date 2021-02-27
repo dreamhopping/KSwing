@@ -1,7 +1,11 @@
 package dev.dreamhopping.kswing
 
+import java.awt.event.WindowAdapter
+import java.awt.event.WindowEvent
 import javax.swing.JButton
 import javax.swing.JFrame
+import javax.swing.WindowConstants
+
 
 /**
  * Constructs a [JFrame]
@@ -46,6 +50,33 @@ fun JFrame.button(init: JButton.() -> Unit): JButton {
     // Add the button to the frame and return it
     this.add(button)
     return button
+}
+
+/**
+ * Sets the defaultCloseOperation to [WindowConstants.EXIT_ON_CLOSE]
+ */
+fun JFrame.quitOnClose() {
+    this.defaultCloseOperation = WindowConstants.EXIT_ON_CLOSE
+}
+
+/**
+ * Calls [JFrame.setVisible] to display the frame, a bit cleaner than the property access syntax
+ */
+fun JFrame.showFrame() {
+    isVisible = true
+}
+
+/**
+ * Calls the supplied action when the JFrame is closed
+ *
+ * @param action The code to call when the JFrame is closed
+ */
+fun JFrame.onClose(action: () -> Unit) {
+    addWindowListener(object : WindowAdapter() {
+        override fun windowClosing(e: WindowEvent) {
+            action()
+        }
+    })
 }
 
 /**

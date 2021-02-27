@@ -1,7 +1,5 @@
 package dev.dreamhopping.kswing
 
-import javax.swing.WindowConstants
-
 /**
  * A demo for KSwing
  *
@@ -10,6 +8,7 @@ import javax.swing.WindowConstants
 fun main(args: Array<String>) {
     // Create a simple frame and display it
     frame("Test Application") {
+        // Add a button to the frame
         button {
             text = "Hello World"
 
@@ -18,7 +17,13 @@ fun main(args: Array<String>) {
             }
         }
 
-        isVisible = true
-        defaultCloseOperation = WindowConstants.EXIT_ON_CLOSE
+        // Print a string when the frame is closed
+        onClose {
+            println("Goodbye :(")
+        }
+
+        // Tell it to kill the process when it is closed & show the frame
+        quitOnClose()
+        showFrame()
     }
 }
