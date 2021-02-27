@@ -1,7 +1,6 @@
 package dev.dreamhopping.kswing
 
 import dev.dreamhopping.kswing.font.KSwingFontBuilder
-import java.awt.Component
 import java.awt.Container
 import java.awt.Font
 import java.awt.event.WindowAdapter
@@ -124,20 +123,6 @@ inline fun JButton.onClick(crossinline action: () -> Unit) {
     addActionListener {
         action()
     }
-}
-
-/**
- * Sets the [JComponent.alignmentX] property to [Component.CENTER_ALIGNMENT], which will horizontally center the component
- */
-fun JComponent.centerHorizontally() {
-    alignmentX = Component.CENTER_ALIGNMENT
-}
-
-/**
- * Sets the [JComponent.alignmentY] property to [Component.CENTER_ALIGNMENT], which will horizontally center the component
- */
-fun JComponent.centerVertically() {
-    alignmentY = Component.CENTER_ALIGNMENT
 }
 
 /**
