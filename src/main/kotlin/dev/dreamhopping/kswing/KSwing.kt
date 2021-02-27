@@ -47,3 +47,12 @@ fun JFrame.button(init: JButton.() -> Unit): JButton {
     this.add(button)
     return button
 }
+
+/**
+ * A wrapper for [JButton.addActionListener] to make the code more understandable, onClick is a more suitable name
+ */
+fun JButton.onClick(action: () -> Unit) {
+    addActionListener {
+        action()
+    }
+}

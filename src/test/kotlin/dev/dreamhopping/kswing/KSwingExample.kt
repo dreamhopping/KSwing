@@ -3,7 +3,7 @@ package dev.dreamhopping.kswing
 import javax.swing.WindowConstants
 
 /**
- * A demo class for KSwing
+ * A demo for KSwing
  *
  * @author Conor Byrne (dreamhopping)
  */
@@ -12,6 +12,10 @@ fun main(args: Array<String>) {
     frame("Test Application") {
         button {
             text = "Hello World"
+
+            onClick {
+                println("Hello World")
+            }
         }
 
         isVisible = true
