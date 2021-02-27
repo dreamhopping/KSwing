@@ -10,65 +10,76 @@ import javax.swing.*
 
 /**
  * Constructs a [JFrame]
- * The default size is 800x600, this can be defined manually by using [frame]
- */
-fun frame(init: JFrame.() -> Unit = {}): JFrame = frame(800, 600, init)
-
-/**
- * Constructs a [JFrame] with a custom title
- * The default size is 800x600, this can be defined manually by using [frame]
  *
- * @param title The title to display on the frame
+ * @param width The width of the frame in pixels, default is 800
+ * @param height The height of the frame in pixels, default is 600
+ * @param title The title to display on the window of the JFrame, default is null
  */
-fun frame(title: String, init: JFrame.() -> Unit = {}): JFrame {
-    val frame = frame(init)
-    frame.title = title
-
-    return frame
-}
-
-/**
- * Constructs a [JFrame] with a custom width and height
- *
- * @param width The width of the frame in pixels
- * @param height The height of the frame in pixels
- */
-fun frame(width: Int, height: Int, init: JFrame.() -> Unit = {}): JFrame {
+inline fun frame(title: String? = null, width: Int = 800, height: Int = 600, init: JFrame.() -> Unit = {}): JFrame {
     val frame = JFrame()
     frame.apply(init)
 
+    frame.title = title
     frame.setSize(width, height)
     return frame
 }
 
 /**
- * Constructs a [JButton] then adds it to the parent [JFrame]
+ * Constructs a [JPanel]
  */
-fun Container.button(init: JButton.() -> Unit = {}): JButton {
-    // Construct the button
-    val button = JButton()
-    button.apply(init)
+inline fun panel(init: JPanel.() -> Unit = {}) = JPanel().apply(init)
 
-    // Add the button to the frame and return it
+/**
+ * Constructs a [JDialog] and automatically sets it to visible if [showDialog] is true
+ *
+ * @param showDialog If the dialog should be automatically shown when created, default is true
+ */
+inline fun dialog(showDialog: Boolean = true, init: JDialog.() -> Unit = {}): JDialog {
+    val dialog = JDialog().apply(init)
+    dialog.isVisible = showDialog
+
+    return dialog
+}
+
+/**
+ * Constructs a [JPanel] and adds it to the parent [JFrame]
+ */
+inline fun JFrame.panel(init: JPanel.() -> Unit = {}): JPanel {
+    val panel = JPanel().apply(init)
+
+    this.add(panel)
+    return panel
+}
+
+/**
+ * Constructs a [JButton] with optional custom text, then adds it to the parent [JFrame]
+ *
+ * @param text The text to display on the button
+ */
+inline fun Container.button(text: String? = null, init: JButton.() -> Unit = {}): JButton {
+    // Construct the button & modify the text
+    val button = JButton().apply(init)
+    button.text = text
+
     this.add(button)
     return button
 }
 
 /**
- * Constructs a [JButton] with custom text, then adds it to the parent [JFrame]
+ * Constructs a [JLabel] with optional custom text, then adds it to the parent [JFrame]
  *
- * @param text The text to display on the button
+ * @param text The text to display on the label
  */
-fun Container.button(text: String, init: JButton.() -> Unit = {}): JButton {
-    // Construct the button & modify the text
-    val button = button(init)
-    button.text = text
+inline fun Container.label(text: String? = null, init: JLabel.() -> Unit = {}): JLabel {
+    val label = JLabel().apply(init)
+    label.text = text
 
-    return button
+    this.add(label)
+    return label
 }
 
 /**
- * Sets the defaultCloseOperation to [WindowConstants.EXIT_ON_CLOSE]
+ * Sets [JFrame.defaultCloseOperation] to [WindowConstants.EXIT_ON_CLOSE]
  */
 fun JFrame.quitOnClose() {
     this.defaultCloseOperation = WindowConstants.EXIT_ON_CLOSE
@@ -82,11 +93,9 @@ fun JFrame.showFrame() {
 }
 
 /**
- * Calls the supplied action when the JFrame is closed
- *
- * @param action The code to run when the JFrame is closed
+ * Calls the supplied action when the [JFrame] is closed
  */
-fun JFrame.onClose(action: () -> Unit) {
+inline fun JFrame.onClose(crossinline action: () -> Unit = {}) {
     addWindowListener(object : WindowAdapter() {
         override fun windowClosing(e: WindowEvent) {
             action()
@@ -97,48 +106,10 @@ fun JFrame.onClose(action: () -> Unit) {
 /**
  * A wrapper for [JButton.addActionListener] to make the code more understandable, onClick is a more suitable name
  */
-fun JButton.onClick(action: () -> Unit) {
+inline fun JButton.onClick(crossinline action: () -> Unit) {
     addActionListener {
         action()
     }
-}
-
-/**
- * Constructs a [JLabel] then adds it to the parent [JFrame]
- */
-fun Container.label(init: JLabel.() -> Unit = {}): JLabel {
-    val label = JLabel()
-    label.init()
-
-    this.add(label)
-    return label
-}
-
-/**
- * Constructs a [JLabel] with custom text, then adds it to the parent [JFrame]
- *
- * @param text The text to display on the label
- */
-fun Container.label(text: String, init: JLabel.() -> Unit = {}): JLabel {
-    val label = label(init)
-    label.text = text
-
-    return label
-}
-
-/**
- * Constructs a [JPanel]
- */
-fun panel(init: JPanel.() -> Unit = {}) = JPanel().apply(init)
-
-/**
- * Constructs a [JPanel] and adds it to the parent [JFrame]
- */
-fun JFrame.panel(init: JPanel.() -> Unit = {}): JPanel {
-    val panel = JPanel().apply(init)
-
-    this.add(panel)
-    return panel
 }
 
 /**
@@ -158,7 +129,7 @@ fun JComponent.centerVertically() {
 /**
  * Sets the [JComponent.font] property using [KSwingFontBuilder]
  */
-fun JComponent.font(init: KSwingFontBuilder.() -> Unit = {}) {
+inline fun JComponent.font(init: KSwingFontBuilder.() -> Unit = {}) {
     font = KSwingFontBuilder().apply(init).build()
 }
 
@@ -171,16 +142,4 @@ fun JComponent.font(init: KSwingFontBuilder.() -> Unit = {}) {
  */
 fun JComponent.font(name: String = font.name, weight: Int = Font.PLAIN, size: Int = font.size) {
     font = KSwingFontBuilder(name, weight, size).build()
-}
-
-/**
- * Constructs a [JDialog] and automatically sets it to visible if [showDialog] is true
- *
- * @param showDialog If the dialog should be automatically shown when created, default is true
- */
-fun dialog(showDialog: Boolean = true, init: JDialog.() -> Unit = {}): JDialog {
-    val dialog = JDialog().apply(init)
-    dialog.isVisible = showDialog
-
-    return dialog
 }
