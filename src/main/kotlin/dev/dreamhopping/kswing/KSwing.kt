@@ -146,3 +146,10 @@ fun JFrame.panel(init: JPanel.() -> Unit = {}): JPanel {
 fun JComponent.centerHorizontally() {
     alignmentX = Component.CENTER_ALIGNMENT
 }
+
+/**
+ * Sets the [JComponent.alignmentY] property to [Component.CENTER_ALIGNMENT], which will horizontally center the component
+ */
+fun JComponent.centerVertically() {
+    alignmentY = Component.CENTER_ALIGNMENT
+}
