@@ -1,5 +1,11 @@
 package dev.dreamhopping.kswing
 
+import java.awt.Font
+import java.awt.Insets
+import javax.swing.BoxLayout
+import javax.swing.border.EmptyBorder
+
+
 /**
  * A demo for KSwing
  *
@@ -8,10 +14,30 @@ package dev.dreamhopping.kswing
 fun main(args: Array<String>) {
     // Create a simple frame and display it
     frame("Test Application") {
-        // Add a button to the frame
-        button("Hello World") {
-            onClick {
-                println("Hello World")
+        // Create the panel
+        panel {
+            // Setup the layout of the panel
+            layout = BoxLayout(this, BoxLayout.Y_AXIS)
+            border = EmptyBorder(Insets(50, 80, 50, 80))
+
+            // Add a button to the frame
+            button("Hello World") {
+                onClick {
+                    println("Hello World")
+                }
+
+                centerHorizontally()
+            }
+
+            // Add a label to the frame
+            label("This is a label") {
+                centerHorizontally()
+            }
+
+            // Add another label to the frame with some style
+            label("This is another label, it is bigger and bolder!") {
+                font = Font(font.name, Font.BOLD, 20)
+                centerHorizontally()
             }
         }
 

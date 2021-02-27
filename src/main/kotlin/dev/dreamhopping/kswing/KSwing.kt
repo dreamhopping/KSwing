@@ -1,17 +1,17 @@
 package dev.dreamhopping.kswing
 
+import java.awt.Component
+import java.awt.Container
 import java.awt.event.WindowAdapter
 import java.awt.event.WindowEvent
-import javax.swing.JButton
-import javax.swing.JFrame
-import javax.swing.WindowConstants
+import javax.swing.*
 
 
 /**
  * Constructs a [JFrame]
  * The default size is 800x600, this can be defined manually by using [frame]
  */
-fun frame(init: JFrame.() -> Unit): JFrame = frame(800, 600, init)
+fun frame(init: JFrame.() -> Unit = {}): JFrame = frame(800, 600, init)
 
 /**
  * Constructs a [JFrame] with a custom title
@@ -19,7 +19,7 @@ fun frame(init: JFrame.() -> Unit): JFrame = frame(800, 600, init)
  *
  * @param title The title to display on the frame
  */
-fun frame(title: String, init: JFrame.() -> Unit): JFrame {
+fun frame(title: String, init: JFrame.() -> Unit = {}): JFrame {
     val frame = frame(init)
     frame.title = title
 
@@ -32,7 +32,7 @@ fun frame(title: String, init: JFrame.() -> Unit): JFrame {
  * @param width The width of the frame in pixels
  * @param height The height of the frame in pixels
  */
-fun frame(width: Int, height: Int, init: JFrame.() -> Unit): JFrame {
+fun frame(width: Int, height: Int, init: JFrame.() -> Unit = {}): JFrame {
     val frame = JFrame()
     frame.apply(init)
 
@@ -43,7 +43,7 @@ fun frame(width: Int, height: Int, init: JFrame.() -> Unit): JFrame {
 /**
  * Constructs a [JButton] then adds it to the parent [JFrame]
  */
-fun JFrame.button(init: JButton.() -> Unit): JButton {
+fun Container.button(init: JButton.() -> Unit = {}): JButton {
     // Construct the button
     val button = JButton()
     button.apply(init)
@@ -58,7 +58,7 @@ fun JFrame.button(init: JButton.() -> Unit): JButton {
  *
  * @param text The text to display on the button
  */
-fun JFrame.button(text: String, init: JButton.() -> Unit): JButton {
+fun Container.button(text: String, init: JButton.() -> Unit = {}): JButton {
     // Construct the button & modify the text
     val button = button(init)
     button.text = text
@@ -100,4 +100,49 @@ fun JButton.onClick(action: () -> Unit) {
     addActionListener {
         action()
     }
+}
+
+/**
+ * Constructs a [JLabel] then adds it to the parent [JFrame]
+ */
+fun Container.label(init: JLabel.() -> Unit = {}): JLabel {
+    val label = JLabel()
+    label.init()
+
+    this.add(label)
+    return label
+}
+
+/**
+ * Constructs a [JLabel] with custom text, then adds it to the parent [JFrame]
+ *
+ * @param text The text to display on the label
+ */
+fun Container.label(text: String, init: JLabel.() -> Unit = {}): JLabel {
+    val label = label(init)
+    label.text = text
+
+    return label
+}
+
+/**
+ * Constructs a [JPanel]
+ */
+fun panel(init: JPanel.() -> Unit = {}) = JPanel().apply(init)
+
+/**
+ * Constructs a [JPanel] and adds it to the parent [JFrame]
+ */
+fun JFrame.panel(init: JPanel.() -> Unit = {}): JPanel {
+    val panel = JPanel().apply(init)
+
+    this.add(panel)
+    return panel
+}
+
+/**
+ * Sets the [JComponent.alignmentX] property to [Component.CENTER_ALIGNMENT], which will horizontally center the component
+ */
+fun JComponent.centerHorizontally() {
+    alignmentX = Component.CENTER_ALIGNMENT
 }
