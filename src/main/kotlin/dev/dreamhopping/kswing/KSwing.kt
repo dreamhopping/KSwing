@@ -15,6 +15,7 @@ fun frame(init: JFrame.() -> Unit): JFrame = frame(800, 600, init)
 
 /**
  * Constructs a [JFrame] with a custom title
+ * The default size is 800x600, this can be defined manually by using [frame]
  *
  * @param title The title to display on the frame
  */
@@ -53,6 +54,19 @@ fun JFrame.button(init: JButton.() -> Unit): JButton {
 }
 
 /**
+ * Constructs a [JButton] with custom text, then adds it to the parent [JFrame]
+ *
+ * @param text The text to display on the button
+ */
+fun JFrame.button(text: String, init: JButton.() -> Unit): JButton {
+    // Construct the button & modify the text
+    val button = button(init)
+    button.text = text
+
+    return button
+}
+
+/**
  * Sets the defaultCloseOperation to [WindowConstants.EXIT_ON_CLOSE]
  */
 fun JFrame.quitOnClose() {
@@ -69,7 +83,7 @@ fun JFrame.showFrame() {
 /**
  * Calls the supplied action when the JFrame is closed
  *
- * @param action The code to call when the JFrame is closed
+ * @param action The code to run when the JFrame is closed
  */
 fun JFrame.onClose(action: () -> Unit) {
     addWindowListener(object : WindowAdapter() {

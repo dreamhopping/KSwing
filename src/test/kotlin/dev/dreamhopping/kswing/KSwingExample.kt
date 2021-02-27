@@ -9,9 +9,7 @@ fun main(args: Array<String>) {
     // Create a simple frame and display it
     frame("Test Application") {
         // Add a button to the frame
-        button {
-            text = "Hello World"
-
+        button("Hello World") {
             onClick {
                 println("Hello World")
             }
