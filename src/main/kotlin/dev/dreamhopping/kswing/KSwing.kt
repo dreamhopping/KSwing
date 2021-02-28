@@ -61,7 +61,7 @@ inline fun JFrame.panel(layout: String? = null, init: JPanel.() -> Unit = {}): J
 }
 
 /**
- * Constructs a [JButton] with optional custom text, then adds it to the parent [JFrame]
+ * Constructs a [JButton] with optional custom text, then adds it to the parent [Container]
  *
  * @param text The text to display on the button
  */
@@ -75,7 +75,7 @@ inline fun Container.button(text: String? = null, layout: String? = null, init: 
 }
 
 /**
- * Constructs a [JLabel] with optional custom text, then adds it to the parent [JFrame]
+ * Constructs a [JLabel] with optional custom text, then adds it to the parent [Container]
  *
  * @param text The text to display on the label
  */
@@ -88,7 +88,7 @@ inline fun Container.label(text: String? = null, layout: String? = null, init: J
 }
 
 /**
- * Constructs a [JMenuBar], then adds it to the parent [JFrame]
+ * Constructs a [JMenuBar], then adds it to the parent [Container]
  */
 inline fun Container.menuBar(layout: String? = null, init: JMenuBar.() -> Unit): JMenuBar {
     val menuBar = JMenuBar().apply(init)
