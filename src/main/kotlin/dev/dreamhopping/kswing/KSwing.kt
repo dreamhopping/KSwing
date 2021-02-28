@@ -7,6 +7,7 @@ import java.awt.event.WindowAdapter
 import java.awt.event.WindowEvent
 import javax.swing.*
 
+
 /**
  * Constructs a [JFrame]
  *
@@ -52,10 +53,10 @@ inline fun dialog(
 /**
  * Constructs a [JPanel] and adds it to the parent [JFrame]
  */
-inline fun JFrame.panel(init: JPanel.() -> Unit = {}): JPanel {
+inline fun JFrame.panel(layout: String? = null, init: JPanel.() -> Unit = {}): JPanel {
     val panel = JPanel().apply(init)
 
-    this.add(panel)
+    this.add(panel, layout)
     return panel
 }
 
@@ -64,12 +65,12 @@ inline fun JFrame.panel(init: JPanel.() -> Unit = {}): JPanel {
  *
  * @param text The text to display on the button
  */
-inline fun Container.button(text: String? = null, init: JButton.() -> Unit = {}): JButton {
+inline fun Container.button(text: String? = null, layout: String? = null, init: JButton.() -> Unit = {}): JButton {
     // Construct the button & modify the text
     val button = JButton().apply(init)
     button.text = text
 
-    this.add(button)
+    this.add(button, layout)
     return button
 }
 
@@ -78,13 +79,52 @@ inline fun Container.button(text: String? = null, init: JButton.() -> Unit = {})
  *
  * @param text The text to display on the label
  */
-inline fun Container.label(text: String? = null, init: JLabel.() -> Unit = {}): JLabel {
+inline fun Container.label(text: String? = null, layout: String? = null, init: JLabel.() -> Unit = {}): JLabel {
     val label = JLabel().apply(init)
     label.text = text
 
-    this.add(label)
+    this.add(label, layout)
     return label
 }
+
+/**
+ * Constructs a [JMenuBar], then adds it to the parent [JFrame]
+ */
+inline fun Container.menuBar(layout: String? = null, init: JMenuBar.() -> Unit): JMenuBar {
+    val menuBar = JMenuBar().apply(init)
+
+    this.add(menuBar, layout)
+    return menuBar
+}
+
+/**
+ * Constructs a [JMenu] with optional custom text, then adds it to the parent [JMenuBar]
+ *
+ * @param text The text to be displayed on the menu item, default to null
+ */
+inline fun JMenuBar.menu(text: String? = null, init: JMenu.() -> Unit): JMenu {
+    val menu = JMenu(text).apply(init)
+
+    this.add(menu)
+    return menu
+}
+
+/**
+ * Constructs a [JMenuItem] with optional custom text, then adds it to the parent [JMenu]
+ *
+ * @param text The text to be displayed on the menu item, default to null
+ */
+inline fun JMenu.menuItem(text: String? = null, init: JMenuItem.() -> Unit): JMenuItem {
+    val menuItem = JMenuItem(text).apply(init)
+
+    this.add(menuItem)
+    return menuItem
+}
+
+/**
+ * A wrapper for [JMenu.addActionListener] to make the code more understandable, onClick is a more suitable name
+ */
+inline fun JMenuItem.onClick(crossinline action: () -> Unit) = addActionListener { action() }
 
 /**
  * Sets [JFrame.defaultCloseOperation] to [WindowConstants.EXIT_ON_CLOSE]
@@ -119,11 +159,7 @@ inline fun JFrame.onClose(crossinline action: () -> Unit = {}) {
 /**
  * A wrapper for [JButton.addActionListener] to make the code more understandable, onClick is a more suitable name
  */
-inline fun JButton.onClick(crossinline action: () -> Unit) {
-    addActionListener {
-        action()
-    }
-}
+inline fun JButton.onClick(crossinline action: () -> Unit) = addActionListener { action() }
 
 /**
  * Sets the [JComponent.font] property using [KSwingFontBuilder]
