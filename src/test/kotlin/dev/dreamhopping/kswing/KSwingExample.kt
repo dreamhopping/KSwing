@@ -4,7 +4,6 @@ import java.awt.*
 import javax.swing.Box
 import javax.swing.BoxLayout
 
-
 /**
  * A demo for KSwing
  *
