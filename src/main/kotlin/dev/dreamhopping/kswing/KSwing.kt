@@ -87,6 +87,27 @@ inline fun Container.label(text: String? = null, layout: String? = null, init: J
 }
 
 /**
+ * Constructs a [JTextField] with optional initial text for the field, then adds it to the parent [Container]
+ *
+ * @param initialText The initial text of the field
+ */
+inline fun Container.textField(
+    initialText: String? = null,
+    layout: String? = null,
+    init: JTextField.() -> Unit = {}
+): JTextField {
+    val textField = JTextField(initialText).apply(init)
+
+    this.add(textField, layout)
+    return textField
+}
+
+/**
+ * A wrapper for [JTextField.addActionListener] to make the code easier to read
+ */
+inline fun JTextField.onAction(crossinline action: () -> Unit) = addActionListener { action() }
+
+/**
  * Constructs a [JMenuBar], then adds it to the parent [Container]
  */
 inline fun Container.menuBar(layout: String? = null, init: JMenuBar.() -> Unit): JMenuBar {

@@ -34,30 +34,44 @@ fun main(args: Array<String>) {
                 font(size = 15)
                 alignmentX = Component.CENTER_ALIGNMENT
             }
+
+            add(Box.createRigidArea(Dimension(0, 10)))
         }
 
-        // Create a button which will display a dialog when clicked
-        button("Show Dialog", BorderLayout.SOUTH) {
-            // Set the font weight to bold
-            font(size = 15)
+        panel(BorderLayout.SOUTH) {
+            layout = BoxLayout(this, BoxLayout.Y_AXIS)
 
-            // Display a dialog when clicked
-            onClick {
-                dialog("Dialog") {
-                    // Set the layout
-                    layout = FlowLayout()
+            // Create a button which will display a dialog when clicked
+            button("Show Dialog") {
+                // Set the font weight to bold
+                font(size = 15)
 
-                    // Add an example label
-                    label("This is a dialog") {
-                        font(size = 17, weight = Font.ITALIC)
-                    }
+                // Display a dialog when clicked
+                onClick {
+                    dialog("Dialog") {
+                        // Set the layout
+                        layout = FlowLayout()
 
-                    // Add a button to dismiss the dialog
-                    button("Close") {
-                        onClick {
-                            this@dialog.dispose()
+                        // Add an example label
+                        label("This is a dialog") {
+                            font(size = 17, weight = Font.ITALIC)
+                        }
+
+                        // Add a button to dismiss the dialog
+                        button("Close") {
+                            onClick {
+                                this@dialog.dispose()
+                            }
                         }
                     }
+                }
+            }
+
+            add(Box.createRigidArea(Dimension(0, 10)))
+
+            textField {
+                onAction {
+                    println(this.text)
                 }
             }
         }
